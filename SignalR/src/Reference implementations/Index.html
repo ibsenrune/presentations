@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/ugh.js"></script>
+    <link href="Content/ugh.css" rel="stylesheet" />
+    <script src="Scripts/jquery-1.6.4.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.0.3.min.js"></script>
+    <script src="signalr/hubs"></script>
+</head>
+<body>
+    <div>
+        <canvas id="game_screen" width="704" height="512"></canvas>
+    </div>
+
+    <script type="text/javascript">
+        var playerName = getParameterByName("name");
+        ugh.init(playerName, "game_screen", "Images/sprites.png", "Images/splash.png");
+
+        var ughHub = $.connection.ughHub;
+        
+        ughHub.client.updatePlayerInfo = function (p) {
+            ugh.updatePlayerInfo(p);
+        }
+
+        ughHub.client.updateBirdInfo = function(b){
+            ugh.updateBirdInfo(b);
+        };
+
+        ughHub.connection.start({ transport: 'foreverFrame' }).done(function () {
+            setInterval(function () {
+                ughHub.server.updatePlayerInfo(ugh.getCurrentPlayerInfo());
+            }, 100);
+        });
+
+        //var connection = $.connection('/ugh');
+        //connection.logging = true;
+
+        //connection.received(function(data) {
+        //    ugh.updatePlayerInfo(JSON.parse(data));
+        //});
+
+        //connection.start( { transport : ['foreverFrame']} ).done(function() {
+        //    setInterval(function() {
+        //        connection.send(ugh.getCurrentPlayerInfo());
+        //    }, 100);
+        //});
+
+    </script>
+</body>
+</html>

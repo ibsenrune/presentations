@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>UGH client side hub code</Title>
+      <Shortcut>ugh_hub_client</Shortcut>
+      <Description>Code snippet for client side wiring up of hub</Description>
+      <Author>Rune Ibsen</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="JavaScript">
+        <![CDATA[var player = getParameterByName("name");
+        ugh.init(player, "game_screen", "Images/sprites.png");
+
+        //Get reference to hub proxy
+        var ughHub = $$.connection.ughHub;
+
+        //Register function to be called by server
+        ughHub.client.updatePlayer = function (player) {
+            ugh.updatePlayer(player.name, player);
+        };
+
+        //When started, call server with current position every 100ms.
+        ughHub.connection.start().done(function () {
+            setInterval(function () {
+                    var pos = ugh.getCurrentPosition();
+                    ughHub.server.updatePlayer(pos);
+            }, 100);
+        });]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

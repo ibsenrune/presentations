@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>UGH Bird Runner</Title>
+      <Shortcut>ugh_birdrunner</Shortcut>
+      <Description>Code snippet for UGH bird runner</Description>
+      <Author>Rune Ibsen</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="csharp">
+        <![CDATA[public class BirdRunner
+    {
+        public static void Run()
+        {
+            while (true)
+            {
+                Thread.Sleep(10000);
+                FlyBy();
+            }
+        }
+
+        private static void FlyBy()
+        {
+            for (int i = 0; i < 48; i++)
+            {
+                var b = new Bird
+                {
+                    X = -32 + 10 * i,
+                    Y = 100,
+                    CurrentFrame = i % 12
+                };
+                Thread.Sleep(100);
+                SendBirdMessageToAllClients(b);
+            }
+        }
+
+        private static void SendBirdMessageToAllClients(Bird b)
+        {
+            IHubContext ughHub = GlobalHost.ConnectionManager.GetHubContext<UghHub>();
+            ughHub.Clients.All.UpdateBirdInfo(b);
+        }
+    }
+    
+    //To start from Startup.Configuration(...):
+    //System.Threading.Tasks.Task.Factory.StartNew(() => BirdRunner.Run());
+    ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

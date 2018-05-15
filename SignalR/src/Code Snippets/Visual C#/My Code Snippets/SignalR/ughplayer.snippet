@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>UGH player</Title>
+      <Shortcut>ugh_player</Shortcut>
+      <Description>Code snippet for Ugh player</Description>
+      <Author>Rune Ibsen</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Code Language="csharp">
+        <![CDATA[public class UghPlayer
+    {
+        [JsonProperty("name")]
+        public string Name      { get; set; }
+        
+        [JsonProperty("x")]
+        public float X            { get; set; }
+
+        [JsonProperty("y")]
+        public float Y            { get; set; }
+
+        [JsonProperty("currentFrame")]
+        public int CurrentFrame { get; set; }
+    }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
